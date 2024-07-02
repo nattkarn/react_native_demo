@@ -1,33 +1,64 @@
-import { View, Text, ScrollView, Image, Button, Linking } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  Button,
+  Linking,
+  ActivityIndicator,
+} from "react-native";
 import { detailStyle } from "../../Styles/DetailStyle";
-import data from "../../mock/attractions.json";
-import { useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 export default function DetailScreen({ navigation, route }) {
-  // console.log("🚀 ~ DetailScreen ~ route:", (route.params.id)-1)
+  const openMap = useCallback(async () => {
+    if (items) {
+      const uri = `http://maps.google.com/maps?q=${items.attraction.latitude},${items.attraction.longitude}`;
+      await Linking.openURL(uri);
+    }
+  }, [items]);
 
-  let d = data.find((o) => o.id === route.params.id);
-  // console.log("🚀 ~ DetailScreen ~ d:", d);
+  const [isLoading, setLoading] = useState(true);
+  const [items, setItems] = useState(null);
 
-  const openMap  = useCallback(async () => {
-    const uri = await Linking.openURL('http://maps.google.com/maps?q=' + d.latitude + ',' + d.longitude)
-  })
+  const getAttractions = async () => {
+    try {
+      const response = await fetch(
+        "https://www.melivecode.com/api/attractions/" + route.params.id
+      );
+      const json = await response.json();
+      setItems(json);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getAttractions();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
-    <ScrollView>
-      <View style={{ padding: 10 }}>
-        {/* ใช้ได้ทั้ง 2 เเบบเเล้วเเต่ชอบ */}
-        <Image source={{ uri: d.coverimage }} style={detailStyle.image} />
-
+    <View style={{ padding: 10 }}>
+      <ScrollView>
+        <Image source={{ uri: items.attraction.coverimage }} style={detailStyle.image} />
         <Text style={detailStyle.imageTextHeader}>
-          {data[route.params.id - 1].name}
+          {items.attraction.name}
         </Text>
         <Text style={detailStyle.textDetail}>
-          {data[route.params.id - 1].detail}
+          {items.attraction.detail}
         </Text>
-        
         <Button style={detailStyle.button} title="Map" onPress={openMap} />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }

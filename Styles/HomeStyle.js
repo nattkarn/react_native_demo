@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const homeStyle = StyleSheet.create({
   container: {
     paddingVertical: 50,
+    paddingHorizontal:10
   },
   card:{
     marginVertical:10
