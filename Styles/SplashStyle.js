@@ -18,7 +18,8 @@ export const splashStyle = StyleSheet.create({
 
   },
   splashContent:{
-    flex:0.05,
+    justifyContent:"center",
+    flex:0.5,
   },
   splashText:{
     color:"white",

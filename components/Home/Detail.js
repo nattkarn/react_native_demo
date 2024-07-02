@@ -1,22 +1,33 @@
-import { View, Text, ScrollView, Image } from "react-native";
-import { homeStyle } from "../../Styles/HomeStyle";
-
-
-const images = {
-    1: require("../../assets/attractions/1.jpg"),
-    2: require("../../assets/attractions/2.jpg"),
-    3: require("../../assets/attractions/3.jpg"),
-}
+import { View, Text, ScrollView, Image, Button, Linking } from "react-native";
+import { detailStyle } from "../../Styles/DetailStyle";
+import data from "../../mock/attractions.json";
+import { useCallback } from "react";
 
 export default function DetailScreen({ navigation, route }) {
-  return (
-    <View>
-      <Image
-        source={images[route.params.id]}
-        style={homeStyle.image}
-      />
+  // console.log("🚀 ~ DetailScreen ~ route:", (route.params.id)-1)
 
-      <Text style={homeStyle.imageTextHeader}>{route.params.name}</Text>
-    </View>
+  let d = data.find((o) => o.id === route.params.id);
+  // console.log("🚀 ~ DetailScreen ~ d:", d);
+
+  const openMap  = useCallback(async () => {
+    const uri = await Linking.openURL('http://maps.google.com/maps?q=' + d.latitude + ',' + d.longitude)
+  })
+
+  return (
+    <ScrollView>
+      <View style={{ padding: 10 }}>
+        {/* ใช้ได้ทั้ง 2 เเบบเเล้วเเต่ชอบ */}
+        <Image source={{ uri: d.coverimage }} style={detailStyle.image} />
+
+        <Text style={detailStyle.imageTextHeader}>
+          {data[route.params.id - 1].name}
+        </Text>
+        <Text style={detailStyle.textDetail}>
+          {data[route.params.id - 1].detail}
+        </Text>
+        
+        <Button style={detailStyle.button} title="Map" onPress={openMap} />
+      </View>
+    </ScrollView>
   );
 }

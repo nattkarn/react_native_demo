@@ -1,11 +1,8 @@
 import { StyleSheet } from "react-native";
 
-export const homeStyle = StyleSheet.create({
+export const detailStyle = StyleSheet.create({
   container: {
     paddingVertical: 50,
-  },
-  card:{
-    marginVertical:10
   },
   textHeader:{
     textAlign:'center',
@@ -25,7 +22,11 @@ export const homeStyle = StyleSheet.create({
     marginTop:10
   },
   textDetail:{
-    fontSize:15,
+    fontSize:13,
     paddingBottom:15
+  },
+  button:{
+    paddingVertical:10,
+    color: 'red'
   }
 });
