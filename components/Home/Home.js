@@ -6,6 +6,7 @@ import {
   Pressable,
   ActivityIndicator,
 } from "react-native";
+import { Searchbar } from "react-native-paper";
 import { homeStyle } from "../../Styles/HomeStyle";
 
 import React, { useEffect, useState } from "react";
@@ -17,14 +18,15 @@ export default function HomeScreen({ navigation }) {
 
   const [isLoading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const getAttractions = async () => {
+  const getAttractions = async (query = "") => {
+    setLoading(true);
     try {
       const response = await fetch(
-        "https://www.melivecode.com/api/attractions"
+        `https://www.melivecode.com/api/attractions?search=${query}`
       );
       const json = await response.json();
-      // console.log("🚀 ~ getAttractions ~ json:", json)
       setItems(json);
     } catch (error) {
       console.error(error);
@@ -37,8 +39,19 @@ export default function HomeScreen({ navigation }) {
     getAttractions();
   }, []);
 
+  const handleSearchChange = (query) => {
+    setSearchQuery(query);
+    getAttractions(query);
+  };
+
   return (
     <View style={homeStyle.container}>
+      <Searchbar
+        label="ค้นหาสถานที่"
+        value={searchQuery}
+        onChangeText={handleSearchChange}
+        style={{ margin: 10 }}
+      />
       {isLoading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (

@@ -3,20 +3,27 @@ import {
   Text,
   ScrollView,
   Image,
-  Button,
   Linking,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { detailStyle } from "../../Styles/DetailStyle";
 import React, { useEffect, useState, useCallback } from "react";
+import { Button } from "react-native-paper";
+
 
 export default function DetailScreen({ navigation, route }) {
   const openMap = useCallback(async () => {
+    
     if (items) {
       const uri = `http://maps.google.com/maps?q=${items.attraction.latitude},${items.attraction.longitude}`;
       await Linking.openURL(uri);
     }
-  }, [items]);
+    else{
+      Alert.alert('Data not Found')
+    }
+  });
+    
 
   const [isLoading, setLoading] = useState(true);
   const [items, setItems] = useState(null);
@@ -57,7 +64,7 @@ export default function DetailScreen({ navigation, route }) {
         <Text style={detailStyle.textDetail}>
           {items.attraction.detail}
         </Text>
-        <Button style={detailStyle.button} title="Map" onPress={openMap} />
+        <Button mode="contained" style={{width:150 , alignSelf:'center' }} theme={{ colors: { primary: 'green' } }} icon="map"  onPress={openMap}>Open Map</Button>
       </ScrollView>
     </View>
   );
