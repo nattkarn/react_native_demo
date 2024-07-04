@@ -9,6 +9,8 @@ import DetailScreen from "./components/Home/Detail.js";
 import Attractions from "./components/Home/Attractions.js"
 import Login from './components/Auth/Login.js'
 import Profile from './components/Auth/Profile.js'
+import QrCode from './components/Home/QrCode.js'
+
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +50,11 @@ export default function App() {
           name="Profile"
           component={Profile}
           options={{ title:"Profile"} }
+        />
+        <Stack.Screen
+          name="QrCode"
+          component={QrCode}
+          options={{ title:"QrCode"} }
         />
       </Stack.Navigator>
     </NavigationContainer>

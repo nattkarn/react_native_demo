@@ -32,6 +32,7 @@ export const homeStyle = StyleSheet.create({
   containerGrid: {
     flexDirection: "row",
     justifyContent: "space-evenly",
+    alignSelf:'flex-start',
     margin: 30,
     
   },
