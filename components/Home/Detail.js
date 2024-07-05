@@ -23,6 +23,11 @@ export default function DetailScreen({ navigation, route }) {
       Alert.alert('Data not Found')
     }
   });
+
+  const openMapIn = (lat, long) => {
+    console.log('lat:',lat + 'long: ', long )
+    navigation.navigate("OpenMaps", { lat: lat, long: long });
+  };
     
 
   const [isLoading, setLoading] = useState(true);
@@ -64,7 +69,8 @@ export default function DetailScreen({ navigation, route }) {
         <Text style={detailStyle.textDetail}>
           {items.attraction.detail}
         </Text>
-        <Button mode="contained" style={{width:150 , alignSelf:'center' }} theme={{ colors: { primary: 'green' } }} icon="map"  onPress={openMap}>Open Map</Button>
+        <Button mode="contained" style={{width:200 , alignSelf:'center', margin:10 }} theme={{ colors: { primary: 'green' } }} icon="map"  onPress={openMap}>Open Map Via External</Button>
+        <Button mode="contained" style={{width:200 , alignSelf:'center', margin:10 }} theme={{ colors: { primary: 'green' } }} icon="map"  onPress={() => openMapIn(items.attraction.latitude, items.attraction.longitude)}>Open Map Via Internal</Button>
       </ScrollView>
     </View>
   );

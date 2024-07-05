@@ -10,7 +10,8 @@ import Attractions from "./components/Home/Attractions.js"
 import Login from './components/Auth/Login.js'
 import Profile from './components/Auth/Profile.js'
 import QrCode from './components/Home/QrCode.js'
-
+import Maps from './components/Home/Map.js'
+import OpenMaps from './components/Home/OpenLocation.js'
 
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +56,16 @@ export default function App() {
           name="QrCode"
           component={QrCode}
           options={{ title:"QrCode"} }
+        />
+        <Stack.Screen
+          name="Maps"
+          component={Maps}
+          options={{ title:"Maps"} }
+        />
+        <Stack.Screen
+          name="OpenMaps"
+          component={OpenMaps}
+          options={{ title:"OpenMaps"} }
         />
       </Stack.Navigator>
     </NavigationContainer>

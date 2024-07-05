@@ -14,6 +14,10 @@ export default function HomeScreen({ navigation }) {
   const onPressQR = () => {
     navigation.navigate("QrCode");
   };
+  const onPressMaps = () => {
+    navigation.navigate("Maps");
+  };
+
 
   return (
     <View style={homeStyle.container}>
@@ -31,9 +35,9 @@ export default function HomeScreen({ navigation }) {
           <Pressable onPress={() => onPressQR()}>
             <Avatar.Icon size={150} icon="qrcode-scan" />
           </Pressable>
-          {/* <Pressable onPress={() => onPressLogin()}>
-            <Avatar.Icon size={150} icon="login" />
-          </Pressable> */}
+          <Pressable onPress={() => onPressMaps()}>
+            <Avatar.Icon size={150} icon="google-maps" />
+          </Pressable>
         </View>
       </ScrollView>
     </View>
